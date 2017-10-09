@@ -21,17 +21,18 @@ namespace TechnicalAnalyst.Droid
             EditText etClose = FindViewById<EditText>(Resource.Id.etClose);
 
             Button btnCalc = FindViewById<Button>(Resource.Id.btnCalc);
-			Button btnReset = FindViewById<Button>(Resource.Id.btnReset);
+            Button btnReset = FindViewById<Button>(Resource.Id.btnReset);
 
             TextView lblbp1 = FindViewById<TextView>(Resource.Id.lblbp1);
-			TextView lblbp2 = FindViewById<TextView>(Resource.Id.lblbp2);
-			TextView lblbp3 = FindViewById<TextView>(Resource.Id.lblbp3);
+            TextView lblbp2 = FindViewById<TextView>(Resource.Id.lblbp2);
+            TextView lblbp3 = FindViewById<TextView>(Resource.Id.lblbp3);
 
-			TextView lblsl1 = FindViewById<TextView>(Resource.Id.lblsl1);
-			TextView lblsl2 = FindViewById<TextView>(Resource.Id.lblsl2);
-			TextView lblsl3 = FindViewById<TextView>(Resource.Id.lblsl3);
+            TextView lblsl1 = FindViewById<TextView>(Resource.Id.lblsl1);
+            TextView lblsl2 = FindViewById<TextView>(Resource.Id.lblsl2);
+            TextView lblsl3 = FindViewById<TextView>(Resource.Id.lblsl3);
 
-            btnCalc.Click+= async delegate {
+            btnCalc.Click += async delegate
+            {
                 btnCalc.Enabled = false;
                 btnReset.Enabled = false;
                 if (this.CurrentFocus != null)
@@ -66,34 +67,31 @@ namespace TechnicalAnalyst.Droid
                 }
                 btnReset.Enabled = true;
                 btnCalc.Enabled = true;
-            };  
+            };
 
-            btnReset.Click+= delegate {
+            btnReset.Click += delegate
+            {
                 ViewGroup group = (ViewGroup)FindViewById(Resource.Id.tableLayout1);
                 int count = group.ChildCount;
-                for (int i = 0;i < count;i++)
+                for (int i = 0; i < count; i++)
                 {
-                    View view = group.GetChildAt(i);
-                    if(view.GetType()==typeof(TableRow))
+                    ViewGroup groupRow = (ViewGroup)group.GetChildAt(i);
+                    int countRowChild = groupRow.ChildCount;
+                    for (int j = 0; j < countRowChild; j++)
                     {
-						ViewGroup groupRow = (ViewGroup)group.GetChildAt(i);
-						int countRowChild = groupRow.ChildCount;
-						for (int j = 0; j < countRowChild; j++)
-						{
-							View viewRow = groupRow.GetChildAt(j);
-							if (viewRow.GetType() == typeof(EditText))
-							{
-								RunOnUiThread(() =>
-								{
-									((EditText)viewRow).Text = null;
-								});
-							}
-						}
+                        View viewRow = groupRow.GetChildAt(j);
+                        if (viewRow.GetType() == typeof(EditText))
+                        {
+                            RunOnUiThread(() =>
+                            {
+                                ((EditText)viewRow).Text = null;
+                            });
+                        }
                     }
                 }
-                 this.Recreate();
+                this.Recreate();
             };
-		}
+        }
     }
 }
 
